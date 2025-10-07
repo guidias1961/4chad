@@ -3,23 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>4CHAD — Full Meme Energy</title>
-  <meta name="description" content="4CHAD — CZ Chad vibes. Meme gallery, intro video, Dexscreener chart, and pure degen energy. Parody, not affiliated with Binance." />
+  <title>4CHAD | Full Meme Energy</title>
+  <meta name="description" content="4CHAD | CZ Chad vibes. Meme gallery, intro video, Dexscreener chart, and pure degen energy. Parody, not affiliated with Binance." />
   <style>
     :root {
       --bg: #0a0a0a;
-      --card: #111213;
+      --card: #0f1012;
+      --panel: #121318;
       --primary: #f0c410; /* Binance yellow vibe */
-      --muted: #9aa0a6;
+      --accent: #7bfff8;
+      --accent2: #ff7bd5;
+      --muted: #aab0b6;
       --ok: #00d68f;
-      --pink: #ff7bd5;
-      --cyan: #7bfff8;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
-    body { margin: 0; background: var(--bg); color: #fff; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; overflow-x: hidden; }
+    body { margin: 0; background: var(--bg); color: #fff; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; overflow-x: hidden; }
 
-    /* Loader */
+    /* ---------- GLOBAL ORNAMENTS / THEME ---------- */
+    .bg-ornaments { position: fixed; inset: -20vh -10vw auto -10vw; z-index: -1; pointer-events: none; filter: blur(40px) saturate(1.2); }
+    .blob { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; opacity: .18; mix-blend-mode: screen; }
+    .blob.one { left: -10vmax; top: -10vmax; background: radial-gradient(closest-side, #ffd95a, transparent 70%); animation: drift 24s ease-in-out infinite alternate; }
+    .blob.two { right: -20vmax; top: 10vmax; background: radial-gradient(closest-side, #7bfff8, transparent 70%); animation: drift 30s ease-in-out infinite alternate .6s; }
+    .blob.three { left: 20vmax; bottom: -20vmax; background: radial-gradient(closest-side, #ff7bd5, transparent 70%); animation: drift 28s ease-in-out infinite alternate 1.2s; }
+    @keyframes drift { from { transform: translate3d(0,0,0) scale(1);} to { transform: translate3d(6vw,-4vh,0) scale(1.08);} }
+
+    a { color: inherit; }
+
+    /* ---------- LOADER ---------- */
     #loader { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; background: radial-gradient(80% 80% at 50% 50%, #0f0f10 0%, #000 70%); }
     .loader-wrap { display: flex; gap: 20px; align-items: center; flex-direction: column; }
     .binance-loader { position: relative; width: 92px; height: 92px; }
@@ -35,108 +46,99 @@
     .progress { margin-top: 10px; width: 260px; height: 10px; background: #2b2d31; border-radius: 999px; overflow: hidden; border:1px solid #3a3d44; }
     .bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ffe27a, var(--primary)); transition: width .2s ease; }
     .hint { color: var(--muted); font-size: 12px; margin-top: 8px; text-align: center; }
-
     .fade-out { animation: fadeOut .6s ease forwards; }
     @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-    /* Intro video overlay */
+    /* ---------- INTRO VIDEO OVERLAY ---------- */
     #intro { position: fixed; inset: 0; z-index: 9000; display: none; background: #000; }
     #intro video { width: 100%; height: 100%; object-fit: cover; }
     .skip { position: absolute; right: 18px; bottom: 18px; background: rgba(0,0,0,.6); color: #fff; border: 1px solid #333; padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 600; }
     .skip:hover { border-color: #666; }
 
-    /* Nav */
+    /* ---------- NAV ---------- */
     header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,.7); backdrop-filter: blur(8px); border-bottom: 1px solid #1b1c1f; }
     .nav { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; }
     .brand { display: flex; align-items: center; gap: 12px; }
-    .brand img { width: 42px; height: 42px; border-radius: 12px; border: 1px solid #24262a; }
+    .brand img { width: 46px; height: 46px; border-radius: 12px; border: 1px solid #24262a; }
     .brand h1 { font-size: 18px; margin: 0; line-height: 1; letter-spacing: .8px; }
     .tag { font-size: 12px; color: var(--muted); }
     .actions { display: flex; gap: 10px; }
-    .btn { background: #16181c; color: #fff; border: 1px solid #26282d; padding: 10px 14px; border-radius: 10px; text-decoration: none; font-weight: 900; letter-spacing: .4px; transition: transform .12s ease, border-color .2s ease; text-transform: uppercase; }
-    .btn.primary { background: var(--primary); color: #111; border-color: #000; box-shadow: 0 6px 22px rgba(240,196,16,.2); }
-    .btn:hover { transform: translateY(-1px) rotate(-.5deg); border-color: #3a3d44; }
+    .btn { background: #16181c; color: #fff; border: 1px solid #26282d; padding: 10px 14px; border-radius: 999px; text-decoration: none; font-weight: 900; letter-spacing: .4px; transition: transform .12s ease, border-color .2s ease, box-shadow .2s ease; text-transform: uppercase; }
+    .btn.primary { background: var(--primary); color: #111; border-color: #000; box-shadow: 0 6px 22px rgba(240,196,16,.25); }
+    .btn:hover { transform: translateY(-1px) rotate(-.4deg); border-color: #3a3d44; box-shadow: 0 10px 26px rgba(0,0,0,.4); }
 
-    /* Hero */
-    .hero { max-width: 1200px; margin: 40px auto 10px; padding: 0 18px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; }
-    .hero-card { background: linear-gradient(180deg, #121316, #0d0e10); border: 1px solid #1c1e22; border-radius: 18px; padding: 26px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
-    .hero h2 { font-size: 52px; margin: 0 0 10px; color: var(--primary); letter-spacing: .5px; text-shadow: 0 2px 0 #000, 0 0 28px rgba(240,196,16,.25); }
-    .hero p { color: #dfe3ea; line-height: 1.6; font-weight: 600; }
-    .glitch { position: relative; display: inline-block; }
-    .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; }
-    .glitch::before { animation: glitch1 2s infinite linear alternate-reverse; color: var(--cyan); clip-path: polygon(0 0,100% 0,100% 45%,0 45%); }
-    .glitch::after  { animation: glitch2 2s infinite linear alternate-reverse; color: var(--pink); clip-path: polygon(0 55%,100% 55%,100% 100%,0 100%); }
-    @keyframes glitch1 { 0%{transform: translate(0,0);} 50%{transform: translate(2px,-1px);} 100%{transform: translate(0,0);} }
-    @keyframes glitch2 { 0%{transform: translate(0,0);} 50%{transform: translate(-2px,1px);} 100%{transform: translate(0,0);} }
+    /* ---------- HERO ---------- */
+    .hero { position: relative; max-width: 1200px; margin: 26px auto 0; padding: 0 18px 40px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; }
+    .hero-card { background: linear-gradient(180deg, #14151a, #0e0f12); border: 1px solid #1c1e22; border-radius: 24px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .hero h2 { font-size: 64px; margin: 0 0 10px; color: #111; letter-spacing: .5px; text-shadow: 0 2px 0 #fff; background: linear-gradient(180deg, #fff 0%, #d7d9de 60%, #9aa0a6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero .sub { color: #e9edf3; line-height: 1.6; font-weight: 700; font-size: 18px; }
+    .cta { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    .pill { background: #0f1115; border: 1px solid #21242b; padding: 10px 14px; border-radius: 999px; font-weight: 900; }
 
-    .ticker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
-    .tile { background: var(--card); border: 1px solid #1d2024; padding: 14px; border-radius: 12px; text-align: center; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02); }
-    .tile b { display: block; font-size: 12px; color: var(--muted); }
-    .tile span { font-size: 20px; font-weight: 900; }
+    .hero-art { position: relative; display: grid; place-items: center; }
+    .hero-mascot { width: 82%; max-width: 420px; border-radius: 24px; border: 1px solid #23262b; box-shadow: 0 18px 50px rgba(0,0,0,.45); transform: rotate(-2deg); transition: transform .4s ease; }
+    .hero-mascot:hover { transform: rotate(2deg) scale(1.03); }
 
-    /* Strips (meme separators) */
-    .strip { position: relative; height: 48px; overflow: hidden; border-top: 1px solid #1d2024; border-bottom: 1px solid #1d2024; background:
-      repeating-linear-gradient(45deg,#0f1012 0 14px,#090a0c 14px 28px);
-    }
-    .strip.alt { background:
-      repeating-linear-gradient(45deg, #1a1b1f 0 14px, #121317 14px 28px);
-    }
-    .strip .scroll { position: absolute; white-space: nowrap; will-change: transform; animation: stripScroll 20s linear infinite; font-weight: 1000; letter-spacing: 1px; font-size: 22px; top: 50%; transform: translateY(-50%); text-shadow: 0 0 12px rgba(240,196,16,.3); }
+    /* ---------- WAVES / STRIPS ---------- */
+    .wave { display: block; width: 100%; height: 80px; }
+    .strip { position: relative; height: 64px; overflow: hidden; border-top: 2px solid var(--primary); border-bottom: 2px solid var(--primary); background: #0f0f10; }
+    .strip .scroll { position: absolute; white-space: nowrap; will-change: transform; animation: stripScroll 18s linear infinite; font-weight: 1000; letter-spacing: 1px; font-size: 24px; top: 50%; transform: translateY(-50%); text-shadow: 0 0 12px rgba(240,196,16,.3); }
     .strip .scroll span { color: var(--primary); margin: 0 22px; }
     @keyframes stripScroll { to { transform: translate(-50%, -50%);} }
 
-    /* Section base */
+    /* ---------- SECTION BASE ---------- */
     .section { max-width: 1200px; margin: 40px auto; padding: 0 18px; }
-    .section h3 { font-size: 28px; margin: 0 0 14px; letter-spacing: .6px; text-shadow: 0 0 18px rgba(255,255,255,.06); }
+    .section h3 { font-size: 32px; margin: 0 0 14px; letter-spacing: .6px; text-shadow: 0 0 18px rgba(255,255,255,.06); }
 
-    /* Gallery */
+    /* ---------- GALLERY ---------- */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-    .card { background: var(--card); border: 1px solid #1d2024; border-radius: 14px; overflow: hidden; position: relative; transform: rotate(calc((var(--r, 0) - .5) * 1deg)); }
-    .card img { width: 100%; display: block; aspect-ratio: 1080/617; object-fit: cover; transition: transform .2s ease, filter .2s ease; }
+    .card { background: var(--panel); border: 1px solid #1d2024; border-radius: 20px; overflow: hidden; position: relative; transform: rotate(calc((var(--r, 0) - .5) * 1deg)); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+    .card::after { content: ""; position: absolute; inset: 0; background: radial-gradient(100% 50% at 50% 0%, rgba(240,196,16,.12), transparent 70%); pointer-events: none; }
+    .card img { width: 100%; display: block; aspect-ratio: 1080/617; object-fit: cover; transition: transform .25s ease, filter .25s ease; }
     .card:hover img { transform: scale(1.03) rotate(.4deg); filter: saturate(1.2); }
 
-    /* Lightbox */
+    /* ---------- LIGHTBOX ---------- */
     .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.92); display: none; align-items: center; justify-content: center; z-index: 8000; }
-    .lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 12px; border: 1px solid #2a2d33; box-shadow: 0 16px 40px rgba(0,0,0,.45); }
-    .lightbox .close, .lightbox .prev, .lightbox .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.5); border: 1px solid #333; color: #fff; padding: 10px 12px; border-radius: 10px; cursor: pointer; user-select: none; font-weight: 800; }
+    .lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 16px; border: 1px solid #2a2d33; box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+    .lightbox .close, .lightbox .prev, .lightbox .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.5); border: 1px solid #333; color: #fff; padding: 10px 12px; border-radius: 12px; cursor: pointer; user-select: none; font-weight: 800; }
     .lightbox .close { top: 24px; right: 24px; transform: none; }
     .lightbox .prev { left: 16px; }
     .lightbox .next { right: 16px; }
 
-    /* Dexscreener */
-    .dex-wrap { background: linear-gradient(180deg,#0d0e10,#0a0b0d); border: 1px solid #1d2024; border-radius: 14px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    /* ---------- DEXSCREENER ---------- */
+    .dex-wrap { background: linear-gradient(180deg,#101116,#0b0c10); border: 1px solid #1d2024; border-radius: 20px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
     .dex-ctrl { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
-    .dex-ctrl input { flex: 1 1 320px; background: #121318; color: #fff; border: 1px solid #242831; border-radius: 10px; padding: 10px 12px; font-weight: 700; }
-    .dex-ctrl button { background: #16181c; color: #fff; border: 1px solid #26282d; padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 900; text-transform: uppercase; }
+    .dex-ctrl input { flex: 1 1 320px; background: #121318; color: #fff; border: 1px solid #242831; border-radius: 999px; padding: 12px 14px; font-weight: 800; }
+    .dex-ctrl button { background: #16181c; color: #fff; border: 1px solid #26282d; padding: 12px 16px; border-radius: 999px; cursor: pointer; font-weight: 900; text-transform: uppercase; }
     .dex-ctrl button.primary { background: var(--primary); color: #111; border-color: #000; }
-    .dex { width: 100%; height: 720px; border: 0; border-radius: 10px; }
+    .dex { width: 100%; height: 720px; border: 0; border-radius: 12px; }
     .dex-note { color: var(--muted); font-size: 12px; margin-top: 8px; }
 
-    /* Tokenomics parody */
+    /* ---------- TOKENOMICS PARODY ---------- */
     .tok-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-    .tok { background: conic-gradient(from 180deg at 50% 50%, #15161a, #0e0f12); border: 1px solid #1d2024; border-radius: 14px; padding: 18px; }
-    .tok h4 { margin: 0 0 6px; color: var(--primary); }
-    .tok p { margin: 0; color: #d5dae2; font-weight: 700; }
+    .tok { background: conic-gradient(from 180deg at 50% 50%, #15161a, #0e0f12); border: 1px solid #1d2024; border-radius: 20px; padding: 20px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02); }
+    .tok h4 { margin: 0 0 6px; color: var(--primary); font-size: 18px; }
+    .tok p { margin: 0; color: #d5dae2; font-weight: 800; }
 
-    /* Footer */
+    /* ---------- FOOTER ---------- */
     footer { margin-top: 50px; border-top: 1px solid #1b1d22; background: #0c0d10; }
     .foot { max-width: 1200px; margin: 0 auto; padding: 20px 18px; color: var(--muted); font-size: 12px; }
 
-    @media (max-width: 980px){
-      .hero { grid-template-columns: 1fr; }
-      .ticker { grid-template-columns: repeat(2, 1fr); }
-      .tok-row { grid-template-columns: repeat(2, 1fr); }
-      .dex { height: 520px; }
-    }
-    @media (max-width: 560px){
-      .tok-row { grid-template-columns: 1fr; }
-      .hero h2 { font-size: 36px; }
-      .dex { height: 440px; }
-    }
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1040px){ .hero { grid-template-columns: 1fr; } }
+    @media (max-width: 980px){ .ticker { grid-template-columns: repeat(2, 1fr); } .tok-row { grid-template-columns: repeat(2, 1fr); } .dex { height: 560px; } }
+    @media (max-width: 560px){ .tok-row { grid-template-columns: 1fr; } .hero h2 { font-size: 42px; } .dex { height: 440px; } }
   </style>
 </head>
 <body>
-  <!-- Loader with Binance-like diamond -->
+  <!-- ORNAMENTS -->
+  <div class="bg-ornaments" aria-hidden="true">
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+    <div class="blob three"></div>
+  </div>
+
+  <!-- LOADER -->
   <div id="loader" aria-live="polite">
     <div class="loader-wrap">
       <div class="binance-loader" aria-hidden="true">
@@ -152,7 +154,7 @@
     </div>
   </div>
 
-  <!-- Intro video overlay -->
+  <!-- INTRO VIDEO OVERLAY -->
   <div id="intro" aria-hidden="true">
     <video id="introVideo" autoplay muted playsinline>
       <source src="2.mp4" type="video/mp4" />
@@ -160,7 +162,7 @@
     <button class="skip" id="skipBtn" title="Skip intro">Skip</button>
   </div>
 
-  <!-- Top nav -->
+  <!-- NAV -->
   <header>
     <nav class="nav">
       <div class="brand">
@@ -179,37 +181,39 @@
     </nav>
   </header>
 
-  <!-- Hero -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-card">
-      <h2><span class="glitch" data-text="4CHAD">4CHAD</span> is live</h2>
-      <p>Meet the meme that lifts the market. CZ Chad energy, Furie flavor, and degen speed. Parody project for fun only. No promises. Only vibes.</p>
-      <div class="ticker">
-        <div class="tile"><b>Ticker</b><span>$4CHAD</span></div>
-        <div class="tile"><b>Chain</b><span>BSC</span></div>
-        <div class="tile"><b>Status</b><span style="color:var(--ok)">Online</span></div>
-        <div class="tile"><b>Meme Power</b><span>9000+</span></div>
+      <h2>4CHAD is live</h2>
+      <p class="sub">Meet the meme that lifts the market. CZ Chad energy with premium cartoon flavor. Parody project for fun only. No promises. Only vibes.</p>
+      <div class="cta">
+        <a class="btn primary" href="#chart">Open chart</a>
+        <a class="btn" href="#gallery">Open gallery</a>
+        <span class="pill">Chain BSC</span>
+        <span class="pill">Ticker $4CHAD</span>
       </div>
-      <div class="marquee"><div class="track">Buy 4CHAD now... Ignore FUD... Build... Lift the chart... CZ never sells... Be like CZ... Repeat... Buy 4CHAD now... Ignore FUD... Build... Lift the chart... CZ never sells... Be like CZ... Repeat...&nbsp;</div></div>
     </div>
-    <div class="hero-card" style="display:grid; place-items:center;">
-      <img src="logo.png" alt="4CHAD emblem" style="width: 72%; max-width: 360px; border-radius: 22%; border:1px solid #23262b; box-shadow: 0 8px 30px rgba(0,0,0,.5)" />
+    <div class="hero-card hero-art">
+      <img src="logo.png" alt="4CHAD emblem" class="hero-mascot" />
     </div>
   </section>
 
-  <!-- STRIP -->
-  <div class="strip"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>CZ CHAD ENERGY</span> <span>$4CHAD</span> <span>IGNORE FUD</span> <span>$4CHAD</span> <span>LIFT THE CHART</span> <span>$4CHAD</span> <span>BE LIKE CZ</span> <span>$4CHAD</span> <span>CZ CHAD ENERGY</span> <span>$4CHAD</span> <span>IGNORE FUD</span> <span>$4CHAD</span> <span>LIFT THE CHART</span> <span>$4CHAD</span></div></div>
+  <!-- WAVY SEPARATOR -->
+  <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path fill="#0f0f10" d="M0,64 C240,32 480,96 720,64 C960,32 1200,0 1440,32 L1440,80 L0,80 Z"></path></svg>
 
-  <!-- Gallery -->
+  <!-- STRIP 1 -->
+  <div class="strip"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>CZ CHAD ENERGY</span> <span>$4CHAD</span> <span>IGNORE FUD</span> <span>$4CHAD</span> <span>LIFT THE CHART</span> <span>$4CHAD</span> <span>BE LIKE CZ</span> <span>$4CHAD</span> </div></div>
+
+  <!-- GALLERY -->
   <section class="section" id="gallery">
     <h3>Meme gallery</h3>
     <div class="grid" id="grid"><!-- images inserted by JS 1.png to 10.png --></div>
   </section>
 
-  <!-- STRIP ALT -->
-  <div class="strip alt"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>MINT MEME POWER</span> <span>$4CHAD</span> <span>DEGEN MODE</span> <span>$4CHAD</span> <span>CZ NEVER SELLS</span> <span>$4CHAD</span> <span>PARODY</span> <span>$4CHAD</span> <span>MINT MEME POWER</span> <span>$4CHAD</span></div></div>
+  <!-- STRIP 2 -->
+  <div class="strip"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>MINT MEME POWER</span> <span>$4CHAD</span> <span>DEGEN MODE</span> <span>$4CHAD</span> <span>CZ NEVER SELLS</span> <span>$4CHAD</span> <span>PARODY</span> <span>$4CHAD</span></div></div>
 
-  <!-- Dexscreener chart -->
+  <!-- DEXSCREENER CHART -->
   <section class="section" id="chart">
     <h3>Live chart</h3>
     <div class="dex-wrap">
@@ -219,14 +223,14 @@
         <button id="saveDex">Save</button>
       </div>
       <iframe id="dexframe" class="dex" title="Dexscreener chart" loading="lazy" allow="clipboard-write; fullscreen"></iframe>
-      <div class="dex-note">Tip: paste only the path like <code>bsc/0x...</code>. We build the full embed URL automatically. Saved locally.</div>
+      <div class="dex-note">Tip: paste only the path like <code>bsc/0x...</code>. The full embed URL is built automatically. Saved locally.</div>
     </div>
   </section>
 
-  <!-- STRIP -->
+  <!-- STRIP 3 -->
   <div class="strip"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>BUY THE DIP</span> <span>$4CHAD</span> <span>IGNORE FUD</span> <span>$4CHAD</span> <span>ONLY VIBES</span> <span>$4CHAD</span> <span>LAUNCH MODE</span> <span>$4CHAD</span></div></div>
 
-  <!-- Tokenomics parody -->
+  <!-- TOKENOMICS PARODY -->
   <section class="section" id="tokenomics">
     <h3>Tokenomics parody</h3>
     <div class="tok-row">
@@ -237,17 +241,14 @@
     </div>
   </section>
 
-  <!-- STRIP ALT -->
-  <div class="strip alt"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>MEME OVER MATTER</span> <span>$4CHAD</span> <span>FROGS APPROVE</span> <span>$4CHAD</span> <span>PARODY PROJECT</span> <span>$4CHAD</span> <span>NO ROADMAP</span> <span>$4CHAD</span></div></div>
-
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
     <div class="foot">
       4CHAD is a parody meme site. Not affiliated with Binance, CZ, or any company. Images 1.png to 10.png are local assets. Video 2.mp4 autoplays muted for intro only.
     </div>
   </footer>
 
-  <!-- Lightbox -->
+  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
     <button class="close" id="lbClose" title="Close">✕</button>
     <button class="prev" id="lbPrev" title="Prev">‹</button>
@@ -256,7 +257,7 @@
   </div>
 
   <script>
-    // Progressive loader while video readies
+    // Progressive loader
     const bar = document.getElementById('bar');
     let p = 0; const timer = setInterval(() => { p = Math.min(100, p + Math.random()*14); if (bar) { bar.style.width = p + '%'; bar.parentElement?.setAttribute('aria-valuenow', p.toFixed(0)); } if (p >= 96) clearInterval(timer); }, 180);
 
@@ -271,11 +272,10 @@
 
     vid.addEventListener('canplaythrough', () => { if (bar) bar.style.width = '100%'; setTimeout(()=>{ hideLoader(); showIntro(); }, 300); }, { once: true });
     setTimeout(()=>{ if (loader.style.display !== 'none') { hideLoader(); showIntro(); } }, 5000);
-
     skip.addEventListener('click', () => { hideIntro(); });
     vid.addEventListener('ended', () => { hideIntro(); });
 
-    // Build gallery programmatically 1.png to 10.png
+    // Gallery 1.png to 10.png
     const grid = document.getElementById('grid');
     const imgs = Array.from({length: 10}, (_,i)=> `${i+1}.png`);
     imgs.forEach((src, idx) => {
@@ -319,15 +319,8 @@
     const loadDex = document.getElementById('loadDex');
     const saveDex = document.getElementById('saveDex');
 
-    function buildDexUrl(path){
-      // Expect path like "bsc/0x..."
-      return `https://dexscreener.com/${path}?embed=1&theme=dark`;
-    }
-    function setDex(path){
-      if(!path) return;
-      dex.src = buildDexUrl(path);
-      pairInput.value = path;
-    }
+    function buildDexUrl(path){ return `https://dexscreener.com/${path}?embed=1&theme=dark`; }
+    function setDex(path){ if(!path) return; dex.src = buildDexUrl(path); pairInput.value = path; }
 
     const urlPair = new URLSearchParams(location.search).get('pair');
     const savedPair = localStorage.getItem('dexPair');
@@ -339,4 +332,3 @@
   </script>
 </body>
 </html>
-
