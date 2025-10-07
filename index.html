@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>4CHAD — Full Meme Energy</title>
-  <meta name="description" content="4CHAD — CZ Chad vibes. Meme gallery, intro video, and pure degen energy. Parody, not affiliated with Binance." />
+  <meta name="description" content="4CHAD — CZ Chad vibes. Meme gallery, intro video, Dexscreener chart, and pure degen energy. Parody, not affiliated with Binance." />
   <style>
     :root {
       --bg: #0a0a0a;
@@ -12,6 +12,8 @@
       --primary: #f0c410; /* Binance yellow vibe */
       --muted: #9aa0a6;
       --ok: #00d68f;
+      --pink: #ff7bd5;
+      --cyan: #7bfff8;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -21,7 +23,6 @@
     #loader { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; background: radial-gradient(80% 80% at 50% 50%, #0f0f10 0%, #000 70%); }
     .loader-wrap { display: flex; gap: 20px; align-items: center; flex-direction: column; }
     .binance-loader { position: relative; width: 92px; height: 92px; }
-    /* CSS-only Binance-like diamond built from rotated squares */
     .sq { position: absolute; width: 28px; height: 28px; background: var(--primary); transform: rotate(45deg); box-shadow: 0 0 18px rgba(240,196,16,.6); }
     .sq.c { left: 32px; top: 32px; animation: pulse 1.2s infinite ease-in-out; }
     .sq.t { left: 32px; top: 0;   animation: bounce 1.2s infinite ease-in-out .1s; }
@@ -30,8 +31,8 @@
     .sq.l { left: 0;   top: 32px; animation: bounce 1.2s infinite ease-in-out .4s; }
     @keyframes pulse { 0%{transform: rotate(45deg) scale(1);} 50%{transform: rotate(45deg) scale(1.1);} 100%{transform: rotate(45deg) scale(1);} }
     @keyframes bounce { 0%{transform: rotate(45deg) translateY(0);} 50%{transform: rotate(45deg) translateY(-6px);} 100%{transform: rotate(45deg) translateY(0);} }
-    .load-text { font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--primary); text-align: center; }
-    .progress { margin-top: 10px; width: 220px; height: 8px; background: #2b2d31; border-radius: 999px; overflow: hidden; }
+    .load-text { font-weight: 900; letter-spacing: .8px; text-transform: uppercase; color: var(--primary); text-align: center; text-shadow: 0 0 18px rgba(240,196,16,.35); }
+    .progress { margin-top: 10px; width: 260px; height: 10px; background: #2b2d31; border-radius: 999px; overflow: hidden; border:1px solid #3a3d44; }
     .bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ffe27a, var(--primary)); transition: width .2s ease; }
     .hint { color: var(--muted); font-size: 12px; margin-top: 8px; text-align: center; }
 
@@ -52,53 +53,70 @@
     .brand h1 { font-size: 18px; margin: 0; line-height: 1; letter-spacing: .8px; }
     .tag { font-size: 12px; color: var(--muted); }
     .actions { display: flex; gap: 10px; }
-    .btn { background: #16181c; color: #fff; border: 1px solid #26282d; padding: 10px 14px; border-radius: 10px; text-decoration: none; font-weight: 700; letter-spacing: .4px; transition: transform .12s ease, border-color .2s ease; }
-    .btn.primary { background: var(--primary); color: #111; border-color: #000; }
-    .btn:hover { transform: translateY(-1px); border-color: #3a3d44; }
+    .btn { background: #16181c; color: #fff; border: 1px solid #26282d; padding: 10px 14px; border-radius: 10px; text-decoration: none; font-weight: 900; letter-spacing: .4px; transition: transform .12s ease, border-color .2s ease; text-transform: uppercase; }
+    .btn.primary { background: var(--primary); color: #111; border-color: #000; box-shadow: 0 6px 22px rgba(240,196,16,.2); }
+    .btn:hover { transform: translateY(-1px) rotate(-.5deg); border-color: #3a3d44; }
 
     /* Hero */
     .hero { max-width: 1200px; margin: 40px auto 10px; padding: 0 18px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; }
     .hero-card { background: linear-gradient(180deg, #121316, #0d0e10); border: 1px solid #1c1e22; border-radius: 18px; padding: 26px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
-    .hero h2 { font-size: 48px; margin: 0 0 10px; color: var(--primary); letter-spacing: .5px; }
-    .hero p { color: #dfe3ea; line-height: 1.5; }
+    .hero h2 { font-size: 52px; margin: 0 0 10px; color: var(--primary); letter-spacing: .5px; text-shadow: 0 2px 0 #000, 0 0 28px rgba(240,196,16,.25); }
+    .hero p { color: #dfe3ea; line-height: 1.6; font-weight: 600; }
     .glitch { position: relative; display: inline-block; }
     .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; }
-    .glitch::before { animation: glitch1 2s infinite linear alternate-reverse; color: #8affff; clip-path: polygon(0 0,100% 0,100% 45%,0 45%); }
-    .glitch::after  { animation: glitch2 2s infinite linear alternate-reverse; color: #ff8ad1; clip-path: polygon(0 55%,100% 55%,100% 100%,0 100%); }
+    .glitch::before { animation: glitch1 2s infinite linear alternate-reverse; color: var(--cyan); clip-path: polygon(0 0,100% 0,100% 45%,0 45%); }
+    .glitch::after  { animation: glitch2 2s infinite linear alternate-reverse; color: var(--pink); clip-path: polygon(0 55%,100% 55%,100% 100%,0 100%); }
     @keyframes glitch1 { 0%{transform: translate(0,0);} 50%{transform: translate(2px,-1px);} 100%{transform: translate(0,0);} }
     @keyframes glitch2 { 0%{transform: translate(0,0);} 50%{transform: translate(-2px,1px);} 100%{transform: translate(0,0);} }
 
     .ticker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
-    .tile { background: var(--card); border: 1px solid #1d2024; padding: 14px; border-radius: 12px; text-align: center; }
+    .tile { background: var(--card); border: 1px solid #1d2024; padding: 14px; border-radius: 12px; text-align: center; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02); }
     .tile b { display: block; font-size: 12px; color: var(--muted); }
-    .tile span { font-size: 20px; font-weight: 800; }
+    .tile span { font-size: 20px; font-weight: 900; }
 
-    /* Marquee */
-    .marquee { margin-top: 14px; overflow: hidden; border: 1px solid #1d2024; border-radius: 12px; background: #0f1012; }
-    .track { white-space: nowrap; will-change: transform; display: inline-block; padding: 10px; animation: scroll 18s linear infinite; }
-    @keyframes scroll { to { transform: translateX(-50%); } }
+    /* Strips (meme separators) */
+    .strip { position: relative; height: 48px; overflow: hidden; border-top: 1px solid #1d2024; border-bottom: 1px solid #1d2024; background:
+      repeating-linear-gradient(45deg,#0f1012 0 14px,#090a0c 14px 28px);
+    }
+    .strip.alt { background:
+      repeating-linear-gradient(45deg, #1a1b1f 0 14px, #121317 14px 28px);
+    }
+    .strip .scroll { position: absolute; white-space: nowrap; will-change: transform; animation: stripScroll 20s linear infinite; font-weight: 1000; letter-spacing: 1px; font-size: 22px; top: 50%; transform: translateY(-50%); text-shadow: 0 0 12px rgba(240,196,16,.3); }
+    .strip .scroll span { color: var(--primary); margin: 0 22px; }
+    @keyframes stripScroll { to { transform: translate(-50%, -50%);} }
+
+    /* Section base */
+    .section { max-width: 1200px; margin: 40px auto; padding: 0 18px; }
+    .section h3 { font-size: 28px; margin: 0 0 14px; letter-spacing: .6px; text-shadow: 0 0 18px rgba(255,255,255,.06); }
 
     /* Gallery */
-    .section { max-width: 1200px; margin: 50px auto; padding: 0 18px; }
-    .section h3 { font-size: 26px; margin: 0 0 14px; letter-spacing: .6px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-    .card { background: var(--card); border: 1px solid #1d2024; border-radius: 14px; overflow: hidden; position: relative; }
-    .card img { width: 100%; display: block; aspect-ratio: 1080/617; object-fit: cover; transition: transform .2s ease; }
-    .card:hover img { transform: scale(1.02); }
+    .card { background: var(--card); border: 1px solid #1d2024; border-radius: 14px; overflow: hidden; position: relative; transform: rotate(calc((var(--r, 0) - .5) * 1deg)); }
+    .card img { width: 100%; display: block; aspect-ratio: 1080/617; object-fit: cover; transition: transform .2s ease, filter .2s ease; }
+    .card:hover img { transform: scale(1.03) rotate(.4deg); filter: saturate(1.2); }
 
     /* Lightbox */
     .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.92); display: none; align-items: center; justify-content: center; z-index: 8000; }
-    .lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 12px; border: 1px solid #2a2d33; }
+    .lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 12px; border: 1px solid #2a2d33; box-shadow: 0 16px 40px rgba(0,0,0,.45); }
     .lightbox .close, .lightbox .prev, .lightbox .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.5); border: 1px solid #333; color: #fff; padding: 10px 12px; border-radius: 10px; cursor: pointer; user-select: none; font-weight: 800; }
     .lightbox .close { top: 24px; right: 24px; transform: none; }
     .lightbox .prev { left: 16px; }
     .lightbox .next { right: 16px; }
 
+    /* Dexscreener */
+    .dex-wrap { background: linear-gradient(180deg,#0d0e10,#0a0b0d); border: 1px solid #1d2024; border-radius: 14px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .dex-ctrl { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+    .dex-ctrl input { flex: 1 1 320px; background: #121318; color: #fff; border: 1px solid #242831; border-radius: 10px; padding: 10px 12px; font-weight: 700; }
+    .dex-ctrl button { background: #16181c; color: #fff; border: 1px solid #26282d; padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 900; text-transform: uppercase; }
+    .dex-ctrl button.primary { background: var(--primary); color: #111; border-color: #000; }
+    .dex { width: 100%; height: 720px; border: 0; border-radius: 10px; }
+    .dex-note { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
     /* Tokenomics parody */
     .tok-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .tok { background: conic-gradient(from 180deg at 50% 50%, #15161a, #0e0f12); border: 1px solid #1d2024; border-radius: 14px; padding: 18px; }
     .tok h4 { margin: 0 0 6px; color: var(--primary); }
-    .tok p { margin: 0; color: #d5dae2; }
+    .tok p { margin: 0; color: #d5dae2; font-weight: 700; }
 
     /* Footer */
     footer { margin-top: 50px; border-top: 1px solid #1b1d22; background: #0c0d10; }
@@ -108,10 +126,12 @@
       .hero { grid-template-columns: 1fr; }
       .ticker { grid-template-columns: repeat(2, 1fr); }
       .tok-row { grid-template-columns: repeat(2, 1fr); }
+      .dex { height: 520px; }
     }
     @media (max-width: 560px){
       .tok-row { grid-template-columns: 1fr; }
-      .hero h2 { font-size: 34px; }
+      .hero h2 { font-size: 36px; }
+      .dex { height: 440px; }
     }
   </style>
 </head>
@@ -163,7 +183,7 @@
   <section class="hero">
     <div class="hero-card">
       <h2><span class="glitch" data-text="4CHAD">4CHAD</span> is live</h2>
-      <p>Meet the meme that lifts the market. CZ Chad energy, Furie flavor, and degen speed. Parody project for fun only.</p>
+      <p>Meet the meme that lifts the market. CZ Chad energy, Furie flavor, and degen speed. Parody project for fun only. No promises. Only vibes.</p>
       <div class="ticker">
         <div class="tile"><b>Ticker</b><span>$4CHAD</span></div>
         <div class="tile"><b>Chain</b><span>BSC</span></div>
@@ -177,11 +197,34 @@
     </div>
   </section>
 
+  <!-- STRIP -->
+  <div class="strip"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>CZ CHAD ENERGY</span> <span>$4CHAD</span> <span>IGNORE FUD</span> <span>$4CHAD</span> <span>LIFT THE CHART</span> <span>$4CHAD</span> <span>BE LIKE CZ</span> <span>$4CHAD</span> <span>CZ CHAD ENERGY</span> <span>$4CHAD</span> <span>IGNORE FUD</span> <span>$4CHAD</span> <span>LIFT THE CHART</span> <span>$4CHAD</span></div></div>
+
   <!-- Gallery -->
   <section class="section" id="gallery">
     <h3>Meme gallery</h3>
     <div class="grid" id="grid"><!-- images inserted by JS 1.png to 10.png --></div>
   </section>
+
+  <!-- STRIP ALT -->
+  <div class="strip alt"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>MINT MEME POWER</span> <span>$4CHAD</span> <span>DEGEN MODE</span> <span>$4CHAD</span> <span>CZ NEVER SELLS</span> <span>$4CHAD</span> <span>PARODY</span> <span>$4CHAD</span> <span>MINT MEME POWER</span> <span>$4CHAD</span></div></div>
+
+  <!-- Dexscreener chart -->
+  <section class="section" id="chart">
+    <h3>Live chart</h3>
+    <div class="dex-wrap">
+      <div class="dex-ctrl">
+        <input id="pairInput" placeholder="bsc/0xPAIR_ADDRESS" spellcheck="false" />
+        <button id="loadDex" class="primary">Load chart</button>
+        <button id="saveDex">Save</button>
+      </div>
+      <iframe id="dexframe" class="dex" title="Dexscreener chart" loading="lazy" allow="clipboard-write; fullscreen"></iframe>
+      <div class="dex-note">Tip: paste only the path like <code>bsc/0x...</code>. We build the full embed URL automatically. Saved locally.</div>
+    </div>
+  </section>
+
+  <!-- STRIP -->
+  <div class="strip"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>BUY THE DIP</span> <span>$4CHAD</span> <span>IGNORE FUD</span> <span>$4CHAD</span> <span>ONLY VIBES</span> <span>$4CHAD</span> <span>LAUNCH MODE</span> <span>$4CHAD</span></div></div>
 
   <!-- Tokenomics parody -->
   <section class="section" id="tokenomics">
@@ -193,6 +236,9 @@
       <div class="tok"><h4>Utility</h4><p>Make you laugh. Make bears cry.</p></div>
     </div>
   </section>
+
+  <!-- STRIP ALT -->
+  <div class="strip alt"><div class="scroll" aria-hidden="true"> <span>$4CHAD</span> <span>MEME OVER MATTER</span> <span>$4CHAD</span> <span>FROGS APPROVE</span> <span>$4CHAD</span> <span>PARODY PROJECT</span> <span>$4CHAD</span> <span>NO ROADMAP</span> <span>$4CHAD</span></div></div>
 
   <!-- Footer -->
   <footer>
@@ -223,13 +269,9 @@
     function hideIntro(){ intro.style.display = 'none'; }
     function hideLoader(){ loader.classList.add('fade-out'); setTimeout(()=>{ loader.style.display = 'none'; }, 650); }
 
-    // When video can play, finish the loader
     vid.addEventListener('canplaythrough', () => { if (bar) bar.style.width = '100%'; setTimeout(()=>{ hideLoader(); showIntro(); }, 300); }, { once: true });
-
-    // Fallback in case canplaythrough never fires
     setTimeout(()=>{ if (loader.style.display !== 'none') { hideLoader(); showIntro(); } }, 5000);
 
-    // Skip and end logic
     skip.addEventListener('click', () => { hideIntro(); });
     vid.addEventListener('ended', () => { hideIntro(); });
 
@@ -239,6 +281,7 @@
     imgs.forEach((src, idx) => {
       const wrap = document.createElement('div');
       wrap.className = 'card';
+      wrap.style.setProperty('--r', Math.random().toString());
       const im = document.createElement('img');
       im.src = src; im.alt = `4CHAD meme ${idx+1}`; im.loading = 'lazy';
       im.addEventListener('click', () => openLightbox(idx));
@@ -269,6 +312,30 @@
         if(e.key === 'ArrowRight') next();
       }
     });
+
+    // Dexscreener embed helper
+    const dex = document.getElementById('dexframe');
+    const pairInput = document.getElementById('pairInput');
+    const loadDex = document.getElementById('loadDex');
+    const saveDex = document.getElementById('saveDex');
+
+    function buildDexUrl(path){
+      // Expect path like "bsc/0x..."
+      return `https://dexscreener.com/${path}?embed=1&theme=dark`;
+    }
+    function setDex(path){
+      if(!path) return;
+      dex.src = buildDexUrl(path);
+      pairInput.value = path;
+    }
+
+    const urlPair = new URLSearchParams(location.search).get('pair');
+    const savedPair = localStorage.getItem('dexPair');
+    const pair = urlPair || savedPair;
+    if (pair) setDex(pair);
+
+    loadDex.addEventListener('click', ()=> setDex(pairInput.value.trim()));
+    saveDex.addEventListener('click', ()=> localStorage.setItem('dexPair', pairInput.value.trim()));
   </script>
 </body>
 </html>
